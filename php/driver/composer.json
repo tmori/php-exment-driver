@@ -1,0 +1,22 @@
+{
+    "name": "exment-api/php-driver",
+    "description": "exment api php driver",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2|^7.4",
+        "pimple/pimple": "~3.0",
+        "psr/http-message": "^1.0",
+        "ext-json": "*",
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^3.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ExmentApi\\Driver\\": "src/",
+            "ExmentApi\\Driver\\Models\\": "src/Models"
+        }
+    }
+}
