@@ -15,7 +15,7 @@ $container = new \Pimple\Container([
         'client_id' => getenv('EXMENT_CLIENT_ID'),
         'client_secret' => getenv('EXMENT_CLIENT_SECRET'),
         'api_key' => getenv('EXMENT_APK_KEY'),
-        'scope' => ''
+        'scope' => 'me'
     ],
     'guzzle' => [
         'verify' => false
@@ -26,7 +26,7 @@ $result = $driver->api_key_authenticate();
 $code = strval($result->getStatusCode());
 $phrase = $result->getReasonPhrase();
 echo "code=${code} : ${phrase}\n";
-$res = $driver->getSystemModel()->version([]);
+$res = $driver->getSystemModel()->avatar();
 echo $res->getBody() . "\n";
 
 ?>

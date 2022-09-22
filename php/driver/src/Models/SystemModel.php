@@ -25,12 +25,25 @@ class SystemModel extends AbstractModel
     public static $endpoint = '/api';
 
     /**
-     * @param array $requestOptions
      * @return ResponseInterface
      */
-    public function version(array $requestOptions)
+    public function version()
     {
-        return $this->client->get(self::$endpoint . '/version', $requestOptions);
+        return $this->client->get(self::$endpoint . '/version', []);
+    }
+    /**
+     * @return ResponseInterface
+     */
+    public function me()
+    {
+        return $this->client->get(self::$endpoint . '/me', []);
+    }
+    /**
+     * @return ResponseInterface
+     */
+    public function avatar()
+    {
+        return $this->client->get(self::$endpoint . '/avatar', []);
     }
 
 }
