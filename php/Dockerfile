@@ -32,3 +32,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 #RUN mkdir /var/www/hako
 WORKDIR /root/workspace
 #RUN COMPOSER_MEMORY_LIMIT=-1 composer create-project laravel/laravel=${LARAVEL_VERSION} .
+
+RUN apt-get install -y jq
