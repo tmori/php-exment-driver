@@ -103,6 +103,22 @@ class DataModel extends AbstractModel
         }
         return $this->client->get(self::$endpoint . '/data/' . strval($table) . '/query-column', $query_params);
     }
-     
+
+    public function data_id($table, $id, $label, $valuetype, $children)
+    {
+        $query_params = [
+        ];
+        if (isset($label)) {
+            $query_params = array_merge($query_params, ['label' => $label ]);
+        }
+        if (isset($valuetype)) {
+            $query_params = array_merge($query_params, ['valuetype' => strval($valuetype) ]);
+        }
+        if (isset($children)) {
+            $query_params = array_merge($query_params, ['children' => $children ]);
+        }
+        return $this->client->get(self::$endpoint . '/data/' . strval($table) . '/' . strval($id), $query_params);
+    }
+    
 }
 ?>
