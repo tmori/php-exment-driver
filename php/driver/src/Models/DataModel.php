@@ -166,6 +166,16 @@ class DataModel extends AbstractModel
         }
         return $this->client->put(self::$endpoint . '/data/' . strval($table) . '/' . strval($id), $request_body);
     }
-    
+
+    public function data_delete($table, $id, $force)
+    {
+        $query_params = [
+        ];
+        if (isset($force)) {
+            $query_params = array_merge($query_params, ['force' => $force ]);
+        }
+        return $this->client->delete(self::$endpoint . '/data/' . strval($table) . '/' . strval($id), $query_params);
+    }
+
 }
 ?>
