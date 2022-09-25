@@ -11,6 +11,7 @@ namespace ExmentApi\Driver;
 
 use ExmentApi\Driver\Models\SystemModel;
 use ExmentApi\Driver\Models\TableModel;
+use ExmentApi\Driver\Models\DataModel;
 
 use GuzzleHttp\Psr7\Response;
 use Pimple\Container;
@@ -121,6 +122,13 @@ class Driver
     public function getTableModel()
     {
         return $this->getModel(TableModel::class);
+    }
+    /**
+     * @return DataModel
+     */
+    public function getDataModel()
+    {
+        return $this->getModel(DataModel::class);
     }
 
 }
