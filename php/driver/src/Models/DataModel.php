@@ -79,6 +79,30 @@ class DataModel extends AbstractModel
         return $this->client->get(self::$endpoint . '/data/' . strval($table) . '/query', $query_params);
     }
 
+    public function data_query_column($table, $query, $page, $count, $label, $valuetype, $or, $orderby, $children)
+    {
+        $query_params = [
+            'q' => $query,
+            'page' => $page,
+            'count' => $count
+        ];
+        if (isset($label)) {
+            $query_params = array_merge($query_params, ['label' => $label ]);
+        }
+        if (isset($valuetype)) {
+            $query_params = array_merge($query_params, ['valuetype' => strval($valuetype) ]);
+        }
+        if (isset($or)) {
+            $query_params = array_merge($query_params, ['or' => strval($or) ]);
+        }
+        if (isset($orderby)) {
+            $query_params = array_merge($query_params, ['orderby' => strval($orderby) ]);
+        }
+        if (isset($children)) {
+            $query_params = array_merge($query_params, ['children' => $children ]);
+        }
+        return $this->client->get(self::$endpoint . '/data/' . strval($table) . '/query-column', $query_params);
+    }
      
 }
 ?>
