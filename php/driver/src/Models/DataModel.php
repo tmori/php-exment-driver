@@ -144,6 +144,28 @@ class DataModel extends AbstractModel
         }
         return $this->client->post(self::$endpoint . '/data/' . strval($table), $request_body);
     }
+
+    public function data_update($table, $id, $value, $findKeys, $parent_type, $parent_id, $label)
+    {
+        $request_body = [
+        ];
+        if (isset($value)) {
+            $request_body = array_merge($request_body, ['value' => $value ]);
+        }
+        if (isset($findKeys)) {
+            $request_body = array_merge($request_body, ['findKeys' => $findKeys ]);
+        }
+        if (isset($parent_type)) {
+            $request_body = array_merge($request_body, ['parent_type' => $parent_type ]);
+        }
+        if (isset($parent_id)) {
+            $request_body = array_merge($request_body, ['parent_id' => $parent_id ]);
+        }
+        if (isset($label)) {
+            $request_body = array_merge($request_body, ['label' => $label ]);
+        }
+        return $this->client->put(self::$endpoint . '/data/' . strval($table) . '/' . strval($id), $request_body);
+    }
     
 }
 ?>
