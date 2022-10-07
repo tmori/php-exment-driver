@@ -176,6 +176,21 @@ class DataModel extends AbstractModel
         }
         return $this->client->delete(self::$endpoint . '/data/' . strval($table) . '/' . strval($id), $query_params);
     }
+    public function get_viewdata($view_id, $table, $page, $count, $valuetype)
+    {
+        $query_params = [
+        ];
+        if (isset($page)) {
+            $query_params = array_merge($query_params, ['page' => $page ]);
+        }
+        if (isset($count)) {
+            $query_params = array_merge($query_params, ['count' => $count ]);
+        }
+        if (isset($valuetype)) {
+            $query_params = array_merge($query_params, ['valuetype' => $valuetype ]);
+        }
+        return $this->client->get(self::$endpoint . '/viewdata/' . strval($table) . '/' . strval($view_id), $query_params);
+    }
 
 }
 ?>
