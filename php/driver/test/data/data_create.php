@@ -5,6 +5,14 @@ require 'vendor/autoload.php';
 use Pimple\Container;
 use ExmentApi\Driver\Driver;
 
+if( $argc != 3 ){
+    echo "Usage: " . $argv[0] . " <table_name> <json_file>\n";
+    exit(1);
+}
+$table_name = $argv[1];
+$json_file = file_get_contents($argv[2]);
+$json_data = json_decode($json_file, true);
+
 $container = new \Pimple\Container([
     'driver' => [
         'scheme' => 'http',
@@ -26,20 +34,28 @@ $result = $driver->api_key_authenticate();
 $code = strval($result->getStatusCode());
 $phrase = $result->getReasonPhrase();
 echo "code=${code} : ${phrase}\n";
-$create_data = [
-    "col1" => "col1_new_data1",
-    "col2" => "col2_new_data1",
-    "col3" => "col3_new_data1",
-    "col4" => "col4_new_data1",
-];
+
+$create_data = [];
+foreach( $json_data as $key => $value )
+{
+    //echo $key . " " . $value . "\n";
+    $create_data[$key] = $value;
+}
+
 $res = $driver->getDataModel()->data_create(
-            $table='test_table', 
+            $table=$table_name, 
             $value=$create_data,
             $findKeys=NULL, 
             $data=NULL, 
             $parent_type=NULL, 
             $parent_id=NULL, 
             $label=NULL);
-echo $res->getBody() . "\n";
+if ($res->getStatusCode() == "201")
+{
+    echo "OK: ResCode=" . $res->getStatusCode() . "\n";
+}
+else{
+    echo "NG: ResCode=" . $res->getStatusCode() . "\n";
+}
 
 ?>
