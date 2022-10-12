@@ -7,9 +7,9 @@ use ExmentApi\Driver\Driver;
 
 //base parameters
 $table_name = 'test_data';
-$col_num = 18;
-//TODO check why max=256 causes error response...
-$col_str_max = 255;
+//TODO check why col_num=18 causes error response(500) : undo log too big...
+$col_num = 10;
+$col_str_max = 256;
 $date = '2022-10-12';
 $user_id_start = 2;
 $repeat_num = 50;
@@ -43,7 +43,7 @@ $driver = new Driver($container);
 $result = $driver->api_key_authenticate();
 $code = strval($result->getStatusCode());
 $phrase = $result->getReasonPhrase();
-echo "code=${code} : ${phrase}\n";
+//echo "code=${code} : ${phrase}\n";
 
 $update_data = [
     'user' => $id1,
@@ -58,9 +58,10 @@ for ( $i = 1; $i <= $col_num; $i++ )
     //$value4 = '';
     $value4 = str_pad(strval($i), $col_str_max - strlen($value1 . $value2 . $value3), 'X', STR_PAD_LEFT); 
     $value = $value1 . $value2 . $value3 . $value4;
+    //echo "value len=" . strlen($value) . "\n";
     $update_data[$col_name] = $value;
 }
-echo "row_id = " . $row_id . "\n";
+//echo "row_id = " . $row_id . "\n";
 
 $res = $driver->getDataModel()->data_update(
     $table=$table_name, 

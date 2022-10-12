@@ -5,6 +5,13 @@ require 'vendor/autoload.php';
 use Pimple\Container;
 use ExmentApi\Driver\Driver;
 
+if( $argc != 3 ){
+    echo "Usage: " . $argv[0] . " <table_name> <table_view_id>\n";
+    exit(1);
+}
+$table_name = $argv[1];
+$table_view_id = $argv[2];
+
 $container = new \Pimple\Container([
     'driver' => [
         'scheme' => 'http',
@@ -27,8 +34,8 @@ $code = strval($result->getStatusCode());
 $phrase = $result->getReasonPhrase();
 echo "code=${code} : ${phrase}\n";
 $res = $driver->getDataModel()->get_viewdata(
-            $view_id=38, 
-            $table='test_table', 
+            $view_id=$table_view_id, 
+            $table=$table_name, 
             $page=NULL, 
             $count=NULL, 
             $valuetype=NULL);
