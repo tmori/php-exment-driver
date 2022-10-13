@@ -8,7 +8,7 @@ use ExmentApi\Driver\Driver;
 //base parameters
 $table_name = 'test_data';
 //TODO check why col_num=18 causes error response(500) : undo log too big...
-$col_num = 10;
+$col_num = 18;
 $col_str_max = 256;
 $date = '2022-10-12';
 $user_id_start = 2;
