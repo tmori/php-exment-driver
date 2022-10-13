@@ -5,12 +5,18 @@ require 'vendor/autoload.php';
 use Pimple\Container;
 use ExmentApi\Driver\Driver;
 
+$table_name = 'test_data';
+
 if( $argc != 3 ){
-    echo "Usage: " . $argv[0] . " <table_name> <table_view_id>\n";
+    echo "Usage: " . $argv[0] . " <id1> <id2>\n";
     exit(1);
 }
-$table_name = $argv[1];
-$table_view_id = $argv[2];
+$id1 = $argv[1];
+$id2 = $argv[2];
+
+$value1='usr=' . str_pad($id1, 3, 0, STR_PAD_LEFT) . ':'; 
+$value2='rid=' . str_pad($id2, 3, 0, STR_PAD_LEFT) . ':'; 
+$keyword = $value1 . $value2;
 
 $container = new \Pimple\Container([
     'driver' => [
@@ -33,19 +39,27 @@ $result = $driver->api_key_authenticate();
 $code = strval($result->getStatusCode());
 $phrase = $result->getReasonPhrase();
 echo "code=${code} : ${phrase}\n";
-$res = $driver->getDataModel()->get_viewdata(
-            $view_id=$table_view_id, 
+if ($code != "200")
+{
+    exit(1);
+}
+$res = $driver->getDataModel()->data_query(
             $table=$table_name, 
+            $query=$keyword,
             $page=NULL, 
             $count=NULL, 
-            $valuetype=NULL);
-//echo $res->getBody() . "\n";
+            $label=NULL, 
+            $valuetype=NULL, 
+            $children=NULL);
+
 if ($res->getStatusCode() == "200")
 {
-    echo "OK: ResCode=" . $res->getStatusCode() . "\n";
+    //echo $res->getBody() . "\n";
+    echo "OK: ResCode=" . $res->getStatusCode() . " id1=" . $id1 . " id2=" . $id2 . "\n";
 }
 else{
-    echo "NG: ResCode=" . $res->getStatusCode() . "\n";
-    //echo $res->getBody() . "\n";
+    $phrase = $result->getReasonPhrase();
+    echo "NG: ResCode=" . $res->getStatusCode() . " id1=" . $id1 . " id2=" . $id2 . " phrase=" . $phrase . "\n";
 }
+
 ?>
